@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals"
 import { Level } from "level"
-import LevelAdapter from ".."
+import { LevelAdapter } from ".."
 
 describe("test LevelAdapter methods", () => {
   test("should instantiate correctly", () => {

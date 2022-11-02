@@ -1,6 +1,6 @@
 import { Level } from "level"
 
-export default class LevelAdapter {
+export class LevelAdapter {
   db: Level
   collections: Collections
   static instance: LevelAdapter
