@@ -1,0 +1,22 @@
+{
+  "name": "level-adapter",
+  "version": "1.0.0",
+  "description": "Typescript Adapter for Level DB",
+  "main": "index.js",
+  "author": "Elliott Lépine",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc && jest",
+    "start": "tsc && node",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.2.2",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "level": "^8.0.0",
+    "ts-jest": "^29.0.3"
+  }
+}
