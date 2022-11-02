@@ -19,4 +19,19 @@ describe("test LevelAdapter methods", () => {
       users: true,
     })
   })
+
+  test("should have a recoverable instance", () => {
+    const config: Config = {
+      path: "./storage",
+      collections: {
+        users: true,
+      },
+    }
+
+    const db = new LevelAdapter(config)
+
+    expect(LevelAdapter.instance).toBeInstanceOf(LevelAdapter)
+
+    expect(LevelAdapter.getInstance()).toEqual(LevelAdapter.instance)
+  })
 })

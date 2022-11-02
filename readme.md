@@ -22,6 +22,16 @@ const config = {
 const db = new LevelAdapter(config)
 ```
 
+## Recover the LevelAdapter instance
+
+```typescript
+import { LevelAdapter } from "level-adapter"
+
+const db = LevelAdapter.instance
+// OR
+const db = LevelAdapter.getInstance()
+```
+
 # License
 
 [MIT](https://choosealicense.com/licenses/mit/#)
