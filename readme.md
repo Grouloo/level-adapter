@@ -1,12 +1,12 @@
 # Level Adapter
 
-# Introduction
+## Introduction
 
 Level Adapter makes the usage of a noSQL embedded database in TypeScript and JavaScript projects easier by providing an abstraction layer to [LevelDB](https://github.com/google/leveldb)
 
-# How to use
+## How to use
 
-## Instantiate Level Adapter
+### Instantiate Level Adapter
 
 ```typescript
 import { LevelAdapter } from 'level-adapter'
@@ -22,7 +22,7 @@ const config = {
 const db = new LevelAdapter(config)
 ```
 
-## Recover the LevelAdapter instance
+### Recover the LevelAdapter instance
 
 ```typescript
 import { LevelAdapter } from 'level-adapter'
@@ -32,7 +32,7 @@ const db = LevelAdapter.instance
 const db = LevelAdapter.getInstance()
 ```
 
-## Create an entry
+### Create an entry
 
 ```typescript
 import { LevelAdapter } from 'level-adapter'
@@ -45,7 +45,7 @@ const user = {
 LevelAdapter.getInstance().create('users', 'john', user)
 ```
 
-## Read an entry
+### Read an entry
 
 ```typescript
 import { LevelAdapter } from 'level-adapter'
@@ -60,6 +60,27 @@ console.log(user)
 // }
 ```
 
-# License
+### Update an entry
+
+```typescript
+import { LevelAdapter } from 'level-adapter'
+
+const user = {
+   age: 25,
+   pet: 'cat',
+}
+
+const user = await LevelAdapter.getInstance().update('users', 'john', user)
+
+console.log(user)
+
+// {
+//   name: 'john doe',
+//   age: 25,
+//   pet: 'cat'
+// }
+```
+
+## License
 
 [MIT](https://choosealicense.com/licenses/mit/#)

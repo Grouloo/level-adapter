@@ -38,6 +38,16 @@ export class LevelAdapter {
    }
 
    /**
+    * Patch an object
+    * @param oldValue
+    * @param newValue
+    * @returns {object} Patched object
+    */
+   _patch(oldValue: any, newValue) {
+      return Object.assign(oldValue, newValue)
+   }
+
+   /**
     * Checks if a collection name exists as a sublevel
     * @param collection
     * @returns {boolean}
@@ -91,5 +101,20 @@ export class LevelAdapter {
       } catch (e) {
          return undefined
       }
+   }
+
+   /**
+    * Updates a stored object by patching it
+    * @param collection Collection name
+    * @param key Key
+    * @param value
+    * @returns {object} Updated object
+    */
+   async update(collection: string, key: string, value: { [x: string]: any }) {
+      const oldValue = await this.read(collection, key)
+
+      const newValue = this._patch(oldValue, value)
+
+      return await this.create(collection, key, newValue)
    }
 }

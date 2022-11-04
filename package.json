@@ -8,8 +8,9 @@
   "private": false,
   "scripts": {
     "build": "tsc && jest",
-    "start": "tsc && node",
-    "test": "jest"
+    "start": "tsc && node lib/index.js",
+    "test": "jest",
+    "example": "yarn build && node lib/examples/index.js"
   },
   "devDependencies": {
     "jest": "^29.2.2",
