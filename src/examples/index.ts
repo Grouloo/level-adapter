@@ -31,4 +31,10 @@ const config: Config = {
    })
 
    console.log(await db.read('users', 'tiffany'))
+
+   console.log('DELETE AN ENTRY')
+
+   await db.delete('users', 'tiffany')
+
+   console.log(await db.read('users', 'tiffany'))
 })()

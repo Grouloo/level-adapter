@@ -138,3 +138,21 @@ describe('test updating', () => {
       })
    })
 })
+
+describe('test deleting', () => {
+   test(`should throw when using inexistant collection`, async () => {
+      expect(
+         LevelAdapter.getInstance().update('accounts', 'john', user),
+      ).resolves.toThrow()
+   })
+
+   test(`should throw when using invalid key`, async () => {
+      expect(
+         LevelAdapter.getInstance().delete('users', undefined),
+      ).resolves.toThrow()
+
+      expect(
+         LevelAdapter.getInstance().delete('users', 1234 as any),
+      ).resolves.toThrow()
+   })
+})

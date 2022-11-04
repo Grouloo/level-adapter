@@ -4,6 +4,8 @@
 
 Level Adapter makes the usage of a noSQL embedded database in TypeScript and JavaScript projects easier by providing an abstraction layer to [LevelDB](https://github.com/google/leveldb)
 
+Based on the [Level JS module](https://github.com/Level/level)
+
 ## How to use
 
 ### Instantiate Level Adapter

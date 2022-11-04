@@ -117,4 +117,18 @@ export class LevelAdapter {
 
       return await this.create(collection, key, newValue)
    }
+
+   /**
+    *
+    * @param collection Collection name
+    * @param key  Key
+    * @returns {void}
+    */
+   async delete(collection: string, key: string) {
+      this.doesCollectionExist(collection)
+
+      await this.sublevels[collection].del(key)
+
+      return
+   }
 }
