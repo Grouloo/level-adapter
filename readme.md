@@ -83,6 +83,14 @@ console.log(user)
 // }
 ```
 
+### Delete an entry
+
+```typescript
+import { LevelAdapter } from 'level-adapter'
+
+await LevelAdapter.getInstance().delete('users', 'john')
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/#)
