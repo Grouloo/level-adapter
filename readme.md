@@ -91,6 +91,31 @@ import { LevelAdapter } from 'level-adapter'
 await LevelAdapter.getInstance().delete('users', 'john')
 ```
 
+### Queries
+
+```typescript
+import { LevelAdapter, Query } from 'level-adapter'
+
+const query =  Query.in('users').where('pet', '==', 'cat')
+   .orderBy('age', 'desc')
+   .setLimit(1).startAt(1)
+
+await LevelAdapter.getInstance().execute(query)
+
+{
+   items: [],
+   meta: {
+      collection: 'users',
+      orderedBy: 'age',
+      order: 'desc',
+      startAt: 1,
+      endAt: 1,
+      count: 0,
+      total: 1
+   } 
+}
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/#)

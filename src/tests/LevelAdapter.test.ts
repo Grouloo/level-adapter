@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, jest } from '@jest/globals'
 import { Level } from 'level'
-import { LevelAdapter } from '..'
-import { Config } from '../types'
+import { LevelAdapter, Query } from '..'
+import { Config } from '../classes/types'
 
 jest.mock('level')
 
@@ -142,7 +142,7 @@ describe('test updating', () => {
 describe('test deleting', () => {
    test(`should throw when using inexistant collection`, async () => {
       expect(
-         LevelAdapter.getInstance().update('accounts', 'john', user),
+         LevelAdapter.getInstance().delete('accounts', 'john'),
       ).resolves.toThrow()
    })
 
@@ -154,5 +154,13 @@ describe('test deleting', () => {
       expect(
          LevelAdapter.getInstance().delete('users', 1234 as any),
       ).resolves.toThrow()
+   })
+})
+
+describe('test queries', () => {
+   test(`should throw when using inexistant collection`, async () => {
+      const q = Query.in('accounts')
+
+      expect(LevelAdapter.getInstance().execute(q)).resolves.toThrow()
    })
 })
