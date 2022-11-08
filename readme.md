@@ -102,18 +102,18 @@ const query =  Query.in('users').where('pet', '==', 'cat')
 
 await LevelAdapter.getInstance().execute(query)
 
-{
-   items: [],
-   meta: {
-      collection: 'users',
-      orderedBy: 'age',
-      order: 'desc',
-      startAt: 1,
-      endAt: 1,
-      count: 0,
-      total: 1
-   } 
-}
+// {
+//    items: [],
+//    meta: {
+//       collection: 'users',
+//       orderedBy: 'age',
+//       order: 'desc',
+//       startAt: 1,
+//       endAt: 1,
+//       count: 0,
+//       total: 1
+//    } 
+// }
 ```
 
 ## License
