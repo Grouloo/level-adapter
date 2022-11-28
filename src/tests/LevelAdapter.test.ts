@@ -26,10 +26,6 @@ describe('test LevelAdapter instantiation', () => {
       const db = LevelAdapter.instance
 
       expect(db.db).toBeInstanceOf(Level)
-
-      expect(db.collections).toEqual({
-         users: true,
-      })
    })
 
    test(`should have a recoverable instance and shouldn't be instantiated multiple times`, () => {
@@ -38,14 +34,6 @@ describe('test LevelAdapter instantiation', () => {
       expect(LevelAdapter.instance).toBeInstanceOf(LevelAdapter)
 
       expect(LevelAdapter.getInstance()).toEqual(LevelAdapter.instance)
-   })
-})
-
-describe('test LevelAdapter instantiation', () => {
-   test(`should throw as collection doesn't exist`, () => {
-      expect(() =>
-         LevelAdapter.getInstance().doesCollectionExist('accounts'),
-      ).toThrow()
    })
 })
 

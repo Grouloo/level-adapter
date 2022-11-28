@@ -4,8 +4,6 @@ import { Collections, Config, Payload, Sublevels } from './types'
 
 export default class LevelAdapter {
    db: Level
-   sublevels: Sublevels
-   collections: Collections
 
    static instance: LevelAdapter
 
@@ -17,15 +15,6 @@ export default class LevelAdapter {
       const { path, collections } = config
 
       this.db = new Level(path || './storage', { valueEncoding: 'json' })
-      this.collections = collections
-
-      // Creating sublevels according to the described collections
-      this.sublevels = {}
-      Object.keys(this.collections).map((collection) => {
-         this.sublevels[collection] = this.db.sublevel(
-            collection,
-         ) as unknown as Level
-      })
 
       LevelAdapter.instance = this
    }
@@ -53,12 +42,16 @@ export default class LevelAdapter {
     * @param collection
     * @returns {boolean}
     */
-   doesCollectionExist(collection: string) {
-      if (Object.keys(this.collections).indexOf(collection) < 0) {
-         throw Error(`Collection ${collection} does not exist.`)
-      }
+   // doesCollectionExist(collection: string) {
+   //    if (Object.keys(this.collections).indexOf(collection) < 0) {
+   //       throw Error(`Collection ${collection} does not exist.`)
+   //    }
 
-      return true
+   //    return true
+   // }
+
+   getSublevel(collection: string) {
+      return this.db.sublevel(collection, { valueEncoding: 'json' })
    }
 
    /**
@@ -69,12 +62,12 @@ export default class LevelAdapter {
     * @returns {object} Value
     */
    async create(collection: string, key: string, value: { [x: string]: any }) {
-      this.doesCollectionExist(collection)
+      const db = this.getSublevel(collection)
 
       const stringifiedValue = JSON.stringify(value)
 
       try {
-         await this.sublevels[collection].put(key, stringifiedValue)
+         await db.put(key, stringifiedValue)
       } catch (e) {
          console.log(e)
       }
@@ -89,10 +82,10 @@ export default class LevelAdapter {
     * @returns {object} Stored object
     */
    async read(collection: string, key: string) {
-      this.doesCollectionExist(collection)
+      const db = this.getSublevel(collection)
 
       try {
-         const value = await this.sublevels[collection].get(key, {
+         const value = await db.get(key, {
             valueEncoding: 'utf8',
          })
 
@@ -126,9 +119,9 @@ export default class LevelAdapter {
     * @returns {void}
     */
    async delete(collection: string, key: string) {
-      this.doesCollectionExist(collection)
+      const db = this.getSublevel(collection)
 
-      await this.sublevels[collection].del(key)
+      await db.del(key)
 
       return
    }
@@ -141,18 +134,23 @@ export default class LevelAdapter {
    async execute(query: Query): Promise<Payload> {
       const { collection, conditions, sortBy, sortOrder, start, limit } = query
 
-      this.doesCollectionExist(collection)
+      const db = this.getSublevel(collection)
 
       let res: any[] = []
       let i = 0
 
-      for await (const doc of await this.sublevels[collection].values()) {
+      for await (const doc of await db.values()) {
          i++
 
          const parsedDoc = JSON.parse(doc)
 
          // Check conditions
          let isValid: boolean = false
+
+         if (!conditions || conditions.length == 0) {
+            isValid = true
+         }
+
          for (let condition of conditions) {
             const { field, operator, value } = condition
 
@@ -182,14 +180,14 @@ export default class LevelAdapter {
                   break
             }
 
-            if (!isValid) {
-               continue
-            }
-
-            res.push(parsedDoc)
-
             break
          }
+
+         if (!isValid) {
+            continue
+         }
+
+         res.push(parsedDoc)
       }
 
       // Sort
