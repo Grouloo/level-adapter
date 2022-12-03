@@ -1,7 +1,7 @@
 import { TypeOperatorNode } from 'typescript'
 import { Condition, operator } from './types'
 
-const Operators: operator[] = ['==', '!=', '<', '>', '<=', '>=']
+const Operators: operator[] = ['==', '!=', '<', '>', '<=', '>=', 'in', 'not-in']
 
 export default class Query {
    collection: string

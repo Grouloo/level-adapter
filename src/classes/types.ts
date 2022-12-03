@@ -26,7 +26,7 @@ export type Payload = {
    }
 }
 
-export type operator = '==' | '!=' | '<' | '>' | '<=' | '>='
+export type operator = '==' | '!=' | '<' | '>' | '<=' | '>=' | 'in' | 'not-in'
 
 export type Condition = {
    field: string

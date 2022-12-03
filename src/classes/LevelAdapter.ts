@@ -178,6 +178,18 @@ export default class LevelAdapter {
                case '>=':
                   isValid = parsedDoc[field] >= value
                   break
+
+               case 'in':
+                  isValid =
+                     Array.isArray(parsedDoc[field]) &&
+                     parsedDoc[field].indexOf(value) > -1
+                  break
+
+               case 'not-in':
+                  isValid =
+                     !Array.isArray(parsedDoc[field]) ||
+                     parsedDoc[field].indexOf(value) == -1
+                  break
             }
 
             break
