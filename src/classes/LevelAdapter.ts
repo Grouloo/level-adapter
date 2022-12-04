@@ -152,43 +152,53 @@ export default class LevelAdapter {
          }
 
          for (let condition of conditions) {
-            const { field, operator, value } = condition
+            let { field, operator, value } = condition
+
+            let valueToTest = parsedDoc[field.split('.')[0]]
+
+            while (field.includes('.')) {
+               const i = field.indexOf('.')
+
+               field = [field.slice(0, i), field.slice(i + 1)][1]
+
+               valueToTest = valueToTest[field]
+            }
 
             switch (operator) {
                case '==':
-                  isValid = parsedDoc[field] == value
+                  isValid = valueToTest == value
                   break
 
                case '!=':
-                  isValid = parsedDoc[field] != value
+                  isValid = valueToTest != value
                   break
 
                case '<':
-                  isValid = parsedDoc[field] < value
+                  isValid = valueToTest < value
                   break
 
                case '>':
-                  isValid = parsedDoc[field] > value
+                  isValid = valueToTest > value
                   break
 
                case '<=':
-                  isValid = parsedDoc[field] <= value
+                  isValid = valueToTest <= value
                   break
 
                case '>=':
-                  isValid = parsedDoc[field] >= value
+                  isValid = valueToTest >= value
                   break
 
                case 'in':
                   isValid =
-                     Array.isArray(parsedDoc[field]) &&
-                     parsedDoc[field].indexOf(value) > -1
+                     Array.isArray(valueToTest) &&
+                     valueToTest.indexOf(value) > -1
                   break
 
                case 'not-in':
                   isValid =
-                     !Array.isArray(parsedDoc[field]) ||
-                     parsedDoc[field].indexOf(value) == -1
+                     !Array.isArray(valueToTest) ||
+                     valueToTest.indexOf(value) == -1
                   break
             }
 
